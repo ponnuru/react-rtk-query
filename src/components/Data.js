@@ -10,14 +10,10 @@ export const Data = () => {
         isError,
         isLoading,
     } = useGetAllProductsQuery();
-    const [productData, setProductData] = useState(allProductsData);
+    console.log('allProductsData', allProductsData);
+    const [productData] = useState(allProductsData);
     const [searchVal, setSearchVal] = useState('');
     let products = productData && productData.products;
-    useEffect(() => {
-        if (searchVal !== '') {
-            const filteredData = products.filter(item => item.title.indexOf(searchVal));
-        }
-    }, [searchVal]);
 
     const handleOnChange = (e) => {
         setSearchVal(e.target.value);
