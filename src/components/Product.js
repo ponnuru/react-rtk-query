@@ -3,42 +3,36 @@ import {
     useGetAllProductsQuery,
     useGetProductQuery,
 } from "../features/apiSlice";
-export const Data = () => {
+import  CuroselWrapper from './ProductThumbNail';
+export const Product = () => {
     const {
         data: allProductsData,
         error,
         isError,
         isLoading,
     } = useGetAllProductsQuery();
-    console.log('allProductsData', allProductsData);
-    const [productData] = useState(allProductsData);
-    const [searchVal, setSearchVal] = useState('');
-    let products = productData && productData.products;
-
-    const handleOnChange = (e) => {
-        setSearchVal(e.target.value);
-    };
+    
     if (isLoading) return <h1> Loading...</h1>;
     return <div class="container">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" onChange={handleOnChange} placeholder="Search the product"
+            {/* <input type="text" class="form-control" onChange={handleOnChange} placeholder="Search the product"
                 aria-describedby="button-addon" />
-            <button class="btn btn-outline-secondary" type="button" id="button-addon"><i class="bi bi-search"></i></button>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon"><i class="bi bi-search"></i></button> */}
         </div>
         <div class="row">
             <div class="col-xl-8">
                 <div class="card border shadow-none">
                     {
-                        products && (
-                            products.map(item => (
+                        allProductsData && allProductsData.products && (
+                            allProductsData.products.map(item => (
                                 <div class="card-body">
                                     <div class="d-flex align-items-start border-bottom pb-3">
                                         <div class="me-4">
-                                            <img src={item.images[0]} alt="" class="avatar-lg rounded" />
+                                            <CuroselWrapper images={item.images}/>
                                         </div>
                                         <div class="flex-grow-1 align-self-center overflow-hidden">
                                             <div>
-                                                <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">Waterproof Mobile Phone </a></h5>
+                                                <h5 class="text-truncate font-size-18"><a href="#" class="text-dark">{item.description} </a></h5>
                                                 <p class="text-muted mb-0">
                                                     <i class="bx bxs-star text-warning"></i>
                                                     <i class="bx bxs-star text-warning"></i>
@@ -46,7 +40,7 @@ export const Data = () => {
                                                     <i class="bx bxs-star text-warning"></i>
                                                     <i class="bx bxs-star-half text-warning"></i>
                                                 </p>
-                                                <p class="mb-0 mt-1">Color : <span class="fw-medium">Gray</span></p>
+                                                <p class="mb-0 mt-1">Stock : <span class="fw-medium">{item.stock}</span></p>
                                             </div>
                                         </div>
 
